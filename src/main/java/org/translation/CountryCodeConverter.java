@@ -4,17 +4,15 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
-// TODO CheckStyle: Wrong lexicographical order for 'java.util.HashMap' import (remove this comment once resolved)
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * This class provides the service of converting country codes to their names.
  */
 public class CountryCodeConverter {
 
-    // TODO Task: pick appropriate instance variable(s) to store the data necessary for this class
+    private List<String[]> countryCodes = new ArrayList<>();
 
     /**
      * Default constructor which will load the country codes from "country-codes.txt"
@@ -35,7 +33,11 @@ public class CountryCodeConverter {
             List<String> lines = Files.readAllLines(Paths.get(getClass()
                     .getClassLoader().getResource(filename).toURI()));
 
-            // TODO Task: use lines to populate the instance variable(s)
+            for (int i = 1; i < lines.size(); i++) {
+                String line = lines.get(i);
+                String[] countryCodeArray = line.split("\t");
+                countryCodes.add(countryCodeArray);
+            }
 
         }
         catch (IOException | URISyntaxException ex) {
@@ -50,7 +52,11 @@ public class CountryCodeConverter {
      * @return the name of the country corresponding to the code
      */
     public String fromCountryCode(String code) {
-        // TODO Task: update this code to use an instance variable to return the correct value
+        for (String[] countryCodeArr : countryCodes) {
+            if (countryCodeArr[2].equalsIgnoreCase(code)) {
+                return countryCodeArr[0];
+            }
+        }
         return code;
     }
 
@@ -60,7 +66,11 @@ public class CountryCodeConverter {
      * @return the 3-letter code of the country
      */
     public String fromCountry(String country) {
-        // TODO Task: update this code to use an instance variable to return the correct value
+        for (String[] countryCodeArr : countryCodes) {
+            if (countryCodeArr[0].equalsIgnoreCase(country)) {
+                return countryCodeArr[2].toLowerCase();
+            }
+        }
         return country;
     }
 
@@ -69,7 +79,8 @@ public class CountryCodeConverter {
      * @return how many countries are included in this code converter.
      */
     public int getNumCountries() {
-        // TODO Task: update this code to use an instance variable to return the correct value
-        return 0;
+
+        return countryCodes.size();
+
     }
 }
