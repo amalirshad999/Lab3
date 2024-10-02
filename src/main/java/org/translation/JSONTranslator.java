@@ -56,14 +56,15 @@ public class JSONTranslator implements Translator {
                 }
                 countriesLanguages.put(countryCode, translations);
             }
-        } catch (IOException | URISyntaxException ex) {
+        }
+        catch (IOException | URISyntaxException ex) {
             throw new RuntimeException(ex);
         }
     }
 
     @Override
     public List<String> getCountryLanguages(String country) {
-        Map<String, String> translations = countryLanguages.get(country);
+        Map<String, String> translations = countriesLanguages.get(country);
         Set<String> languages = translations.keySet();
         return new ArrayList<>(languages);
     }
