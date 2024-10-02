@@ -65,7 +65,7 @@ public class JSONTranslator implements Translator {
     public List<String> getCountryLanguages(String country) {
         Map<String, String> translations = countriesLanguages.get(country);
         Set<String> languages = translations.keySet();
-        return new ArrayList<>();
+        return new ArrayList<>(languages);
     }
 
     @Override
