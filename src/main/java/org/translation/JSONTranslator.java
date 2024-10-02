@@ -30,6 +30,7 @@ public class JSONTranslator implements Translator {
 
     /**
      * Constructs a JSONTranslator populated using data from the specified resources file.
+     *
      * @param filename the name of the file in resources to load the data from
      * @throws RuntimeException if the resource file can't be loaded properly
      */
@@ -55,8 +56,7 @@ public class JSONTranslator implements Translator {
                 }
                 countriesLanguages.put(countryCode, translations);
             }
-        }
-        catch (IOException | URISyntaxException ex) {
+        } catch (IOException | URISyntaxException ex) {
             throw new RuntimeException(ex);
         }
     }
@@ -64,9 +64,16 @@ public class JSONTranslator implements Translator {
     @Override
     public List<String> getCountryLanguages(String country) {
         Map<String, String> translations = countriesLanguages.get(country);
+
+        if (translations == null) {
+            return new ArrayList<>();
+        }
+
         Set<String> languages = translations.keySet();
         return new ArrayList<>(languages);
     }
+}
+
 
     @Override
     public List<String> getCountries() {
