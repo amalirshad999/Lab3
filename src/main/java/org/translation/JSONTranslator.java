@@ -63,23 +63,15 @@ public class JSONTranslator implements Translator {
 
     @Override
     public List<String> getCountryLanguages(String country) {
-        Map<String, String> translations = countriesLanguages.get(country);
-
-        if (translations == null) {
-            return new ArrayList<>();
-        }
-
+        Map<String, String> translations = countryLanguages.get(country);
         Set<String> languages = translations.keySet();
         return new ArrayList<>(languages);
     }
-}
-
 
     @Override
     public List<String> getCountries() {
         Set<String> countries = countriesLanguages.keySet();
         return new ArrayList<>(countries);
-
     }
 
     @Override
